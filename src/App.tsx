@@ -1,11 +1,7 @@
-import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   useEffect(() => {
     const iframe = document.getElementById("zenuml-iframe");
     const message = {
@@ -18,6 +14,7 @@ function App() {
       },
     };
     setTimeout(() => {
+      // @ts-ignore
       if (iframe) iframe.contentWindow.postMessage(message, "*");
     }, 1000);
   }, []);
@@ -31,7 +28,11 @@ function App() {
         flexDirection: "row",
       }}
     >
-      <div style={{ width: "50%", height: "100%" }}>Upload Image</div>
+      <div
+        style={{ width: "50%", height: "100%", borderRight: "1px solid white" }}
+      >
+        Upload Image
+      </div>
       <iframe
         src="https://embed.zenuml.com/embed.html"
         id="zenuml-iframe"
