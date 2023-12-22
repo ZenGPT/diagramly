@@ -1,22 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
+import ZenUml from "@ZenUML/core";
 
 function App() {
+  const zenumlElm = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const iframe = document.getElementById("zenuml-iframe");
-    const message = {
-      action: "eval",
-      args: {
-        code: "ZenUML.Hello",
-        style: "#diagram { background-color: red; width: 100%; height: 100% }",
-        theme: "blue",
-        css: "",
-      },
-    };
-    setTimeout(() => {
-      // @ts-ignore
-      if (iframe) iframe.contentWindow.postMessage(message, "*");
-    }, 1000);
+    const zenUml = new ZenUml(zenumlElm.current);
+    zenUml.render("A.method", "theme-blue");
   }, []);
 
   return (
@@ -33,11 +23,11 @@ function App() {
       >
         Upload Image
       </div>
-      <iframe
-        src="https://embed.zenuml.com/embed.html"
+      <div
+        ref={zenumlElm}
         id="zenuml-iframe"
         style={{ width: "50%", height: "100%", border: "none" }}
-      ></iframe>
+      ></div>
     </div>
   );
 }
